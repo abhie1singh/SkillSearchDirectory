@@ -7,4 +7,8 @@ import com.ssd.entity.User;
 public interface UserService{
     
 	List<User> findAllUsers(); 
+	
+	User findByUserSid(String userSid);
+	
+	User findByEmail(String email);
 }

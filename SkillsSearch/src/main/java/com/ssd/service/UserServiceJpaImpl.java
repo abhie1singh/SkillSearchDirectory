@@ -26,4 +26,16 @@ public class UserServiceJpaImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userRepository.findAll();
 	}
+
+	@Override
+	public User findByUserSid(String userSid) {
+		// TODO Auto-generated method stub
+		return userRepository.findByUserSid(userSid);
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userRepository.findByEmail(email);
+	}
 }
