@@ -43,5 +43,15 @@ public class UserWebController {
     public String viewSearchResults(Model model) {
         return "site.searchresults";
     }
+	
+	@RequestMapping("/createprofile")
+    public String viewCreateProfile(Model model) {
+        return "site.createprofile";
+    }
+	
+	@RequestMapping("/editprofile")
+    public String viewEditProfile(Model model) {
+        return "site.editprofile";
+    }
 
 }

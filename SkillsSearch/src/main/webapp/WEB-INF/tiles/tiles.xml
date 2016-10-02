@@ -45,4 +45,16 @@
 		<put-attribute name="body" value="/WEB-INF/pages/searchresults.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
 	</definition>
+	
+	<definition name="site.createprofile" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/createprofile.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+	
+	<definition name="site.editprofile" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/editprofile.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
 </tiles-definitions>
