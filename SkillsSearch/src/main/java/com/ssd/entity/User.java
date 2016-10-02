@@ -112,14 +112,14 @@ public class User implements Serializable {
 
 	public Help addHelps1(Help helps1) {
 		getHelps1().add(helps1);
-		helps1.setUser1(this);
+		helps1.setProvider(this);
 
 		return helps1;
 	}
 
 	public Help removeHelps1(Help helps1) {
 		getHelps1().remove(helps1);
-		helps1.setUser1(null);
+		helps1.setProvider(this);
 
 		return helps1;
 	}
@@ -137,14 +137,13 @@ public class User implements Serializable {
 
 	public Help addHelps2(Help helps2) {
 		getHelps2().add(helps2);
-		helps2.setUser2(this);
-
+		helps2.setRequester(this);
 		return helps2;
 	}
 
 	public Help removeHelps2(Help helps2) {
 		getHelps2().remove(helps2);
-		helps2.setUser2(null);
+		helps2.setRequester(this);
 
 		return helps2;
 	}
