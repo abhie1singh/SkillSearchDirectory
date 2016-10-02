@@ -36,14 +36,14 @@ public class Help implements Serializable {
 
 	private String isHelping;
 
-	private User provider;
+	private String provider;
 
 	private BigDecimal rating;
 
 	@Column(name="requested_hours")
 	private int requestedHours;
 
-	private User requester;
+	private String requester;
 
 	@Column(name="updated_by")
 	private String updatedBy;
@@ -111,13 +111,11 @@ public class Help implements Serializable {
 		this.isHelping = isHelping;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="location_id")
-	public User getProvider() {
+	public String getProvider() {
 		return this.provider;
 	}
 
-	public void setProvider(User provider) {
+	public void setProvider(String provider) {
 		this.provider = provider;
 	}
 
@@ -137,13 +135,11 @@ public class Help implements Serializable {
 		this.requestedHours = requestedHours;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="location_id")
-	public User getRequester() {
+	public String getRequester() {
 		return this.requester;
 	}
 
-	public void setRequester(User requester) {
+	public void setRequester(String requester) {
 		this.requester = requester;
 	}
 

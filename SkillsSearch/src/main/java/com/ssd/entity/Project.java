@@ -3,7 +3,6 @@ package com.ssd.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -14,19 +13,30 @@ import java.util.List;
 @NamedQuery(name="Project.findAll", query="SELECT p FROM Project p")
 public class Project implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
 	private ProjectPK id;
+
+	@Column(name="created_by")
 	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	private Date createdDate;
+
+	@Column(name="location_id")
+	private int locationId;
+
+	@Column(name="updated_by")
 	private String updatedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="updated_date")
 	private Date updatedDate;
-	private Location location;
-	private List<UserProjectSkill> userProjectSkills;
 
 	public Project() {
 	}
 
-
-	@EmbeddedId
 	public ProjectPK getId() {
 		return this.id;
 	}
@@ -35,8 +45,6 @@ public class Project implements Serializable {
 		this.id = id;
 	}
 
-
-	@Column(name="created_by")
 	public String getCreatedBy() {
 		return this.createdBy;
 	}
@@ -45,9 +53,6 @@ public class Project implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
 	public Date getCreatedDate() {
 		return this.createdDate;
 	}
@@ -56,8 +61,14 @@ public class Project implements Serializable {
 		this.createdDate = createdDate;
 	}
 
+	public int getLocationId() {
+		return this.locationId;
+	}
 
-	@Column(name="updated_by")
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
+	}
+
 	public String getUpdatedBy() {
 		return this.updatedBy;
 	}
@@ -66,52 +77,12 @@ public class Project implements Serializable {
 		this.updatedBy = updatedBy;
 	}
 
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_date")
 	public Date getUpdatedDate() {
 		return this.updatedDate;
 	}
 
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
-	}
-
-
-	//bi-directional many-to-one association to Location
-	@ManyToOne
-	@JoinColumn(name="location_id")
-	public Location getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
-
-	//bi-directional many-to-one association to UserProjectSkill
-	@OneToMany(mappedBy="project")
-	public List<UserProjectSkill> getUserProjectSkills() {
-		return this.userProjectSkills;
-	}
-
-	public void setUserProjectSkills(List<UserProjectSkill> userProjectSkills) {
-		this.userProjectSkills = userProjectSkills;
-	}
-
-	public UserProjectSkill addUserProjectSkill(UserProjectSkill userProjectSkill) {
-		getUserProjectSkills().add(userProjectSkill);
-		userProjectSkill.setProject(this);
-
-		return userProjectSkill;
-	}
-
-	public UserProjectSkill removeUserProjectSkill(UserProjectSkill userProjectSkill) {
-		getUserProjectSkills().remove(userProjectSkill);
-		userProjectSkill.setProject(null);
-
-		return userProjectSkill;
 	}
 
 }

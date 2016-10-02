@@ -31,13 +31,13 @@ public class UserProjectSkill implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date origindate;
 
-	private Project project;
+	private int projectid;
 
 	private BigDecimal ratings;
 
-	private User user;
+	private String sid;
 
-	private Skill skill;
+	private int skillid;
 
 	@Column(name="updated_by")
 	private String updatedBy;
@@ -45,6 +45,9 @@ public class UserProjectSkill implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_date")
 	private Date updatedDate;
+
+	@Column(name="user_id")
+	private int userId;
 
 	public UserProjectSkill() {
 	}
@@ -81,14 +84,12 @@ public class UserProjectSkill implements Serializable {
 		this.origindate = origindate;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="project_id")
-	public Project getProject() {
-		return this.project;
+	public int getProjectid() {
+		return this.projectid;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setProjectid(int projectid) {
+		this.projectid = projectid;
 	}
 
 	public BigDecimal getRatings() {
@@ -99,24 +100,20 @@ public class UserProjectSkill implements Serializable {
 		this.ratings = ratings;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="location_id")
-	public User getUser() {
-		return user;
+	public String getSid() {
+		return this.sid;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setSid(String sid) {
+		this.sid = sid;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="skillid")
-	public Skill getSkill() {
-		return skill;
+	public int getSkillid() {
+		return this.skillid;
 	}
 
-	public void setSkill(Skill skill) {
-		this.skill = skill;
+	public void setSkillid(int skillid) {
+		this.skillid = skillid;
 	}
 
 	public String getUpdatedBy() {
@@ -133,6 +130,14 @@ public class UserProjectSkill implements Serializable {
 
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+
+	public int getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 }

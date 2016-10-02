@@ -11,21 +11,21 @@ import javax.persistence.*;
 public class ProjectPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
+
+	@Column(name="project_id")
 	private int projectId;
+
+	@Column(name="project_name")
 	private String projectName;
 
 	public ProjectPK() {
 	}
-
-	@Column(name="project_id")
 	public int getProjectId() {
 		return this.projectId;
 	}
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
-
-	@Column(name="project_name")
 	public String getProjectName() {
 		return this.projectName;
 	}
