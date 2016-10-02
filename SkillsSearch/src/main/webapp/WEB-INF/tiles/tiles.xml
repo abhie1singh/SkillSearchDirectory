@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="site.home" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/home.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+
+	<definition name="site.login" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/login.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+
+	<definition name="site.reset" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/resetpassword.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+
+	<definition name="site.forgot" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/forgotpassword.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+
+	<definition name="site.user" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/user.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+
+	<definition name="site.project" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/project.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+	
+	<definition name="site.searchresults" template="/WEB-INF/template/template.jsp">
+		<put-attribute name="header" value="/WEB-INF/template/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/searchresults.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/template/footer.jsp" />
+	</definition>
+</tiles-definitions>
