@@ -3,6 +3,7 @@ package com.ssd.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -13,43 +14,33 @@ import java.util.Date;
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="user_id")
-	private int userId;
-
-	@Column(name="created_by")
+	private UserPK id;
 	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
 	private Date createdDate;
-
 	private String email;
-
 	private String password;
-
-	@Column(name="updated_by")
 	private String updatedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_date")
 	private Date updatedDate;
-
-	@Column(name="user_sid")
-	private String userSid;
+	private List<Help> helps1;
+	private List<Help> helps2;
+	private UserProfile userProfile;
+	private List<UserProjectSkill> userProjectSkills;
 
 	public User() {
 	}
 
-	public int getUserId() {
-		return this.userId;
+
+	@EmbeddedId
+	public UserPK getId() {
+		return this.id;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setId(UserPK id) {
+		this.id = id;
 	}
 
+
+	@Column(name="created_by")
 	public String getCreatedBy() {
 		return this.createdBy;
 	}
@@ -58,6 +49,9 @@ public class User implements Serializable {
 		this.createdBy = createdBy;
 	}
 
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	public Date getCreatedDate() {
 		return this.createdDate;
 	}
@@ -65,6 +59,7 @@ public class User implements Serializable {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 
 	public String getEmail() {
 		return this.email;
@@ -74,6 +69,7 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+
 	public String getPassword() {
 		return this.password;
 	}
@@ -82,6 +78,8 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+
+	@Column(name="updated_by")
 	public String getUpdatedBy() {
 		return this.updatedBy;
 	}
@@ -90,6 +88,9 @@ public class User implements Serializable {
 		this.updatedBy = updatedBy;
 	}
 
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="updated_date")
 	public Date getUpdatedDate() {
 		return this.updatedDate;
 	}
@@ -98,12 +99,91 @@ public class User implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public String getUserSid() {
-		return this.userSid;
+
+	//bi-directional many-to-one association to Help
+	@OneToMany(mappedBy="user1")
+	public List<Help> getHelps1() {
+		return this.helps1;
 	}
 
-	public void setUserSid(String userSid) {
-		this.userSid = userSid;
+	public void setHelps1(List<Help> helps1) {
+		this.helps1 = helps1;
+	}
+
+	public Help addHelps1(Help helps1) {
+		getHelps1().add(helps1);
+		helps1.setUser1(this);
+
+		return helps1;
+	}
+
+	public Help removeHelps1(Help helps1) {
+		getHelps1().remove(helps1);
+		helps1.setUser1(null);
+
+		return helps1;
+	}
+
+
+	//bi-directional many-to-one association to Help
+	@OneToMany(mappedBy="user2")
+	public List<Help> getHelps2() {
+		return this.helps2;
+	}
+
+	public void setHelps2(List<Help> helps2) {
+		this.helps2 = helps2;
+	}
+
+	public Help addHelps2(Help helps2) {
+		getHelps2().add(helps2);
+		helps2.setUser2(this);
+
+		return helps2;
+	}
+
+	public Help removeHelps2(Help helps2) {
+		getHelps2().remove(helps2);
+		helps2.setUser2(null);
+
+		return helps2;
+	}
+
+
+	//bi-directional one-to-one association to UserProfile
+	@OneToOne
+	@JoinColumn(name="user_sid", referencedColumnName="user_sid")
+	public UserProfile getUserProfile() {
+		return this.userProfile;
+	}
+
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+
+	//bi-directional many-to-one association to UserProjectSkill
+	@OneToMany(mappedBy="user")
+	public List<UserProjectSkill> getUserProjectSkills() {
+		return this.userProjectSkills;
+	}
+
+	public void setUserProjectSkills(List<UserProjectSkill> userProjectSkills) {
+		this.userProjectSkills = userProjectSkills;
+	}
+
+	public UserProjectSkill addUserProjectSkill(UserProjectSkill userProjectSkill) {
+		getUserProjectSkills().add(userProjectSkill);
+		userProjectSkill.setUser(this);
+
+		return userProjectSkill;
+	}
+
+	public UserProjectSkill removeUserProjectSkill(UserProjectSkill userProjectSkill) {
+		getUserProjectSkills().remove(userProjectSkill);
+		userProjectSkill.setUser(null);
+
+		return userProjectSkill;
 	}
 
 }

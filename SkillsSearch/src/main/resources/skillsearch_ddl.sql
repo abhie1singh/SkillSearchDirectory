@@ -53,6 +53,7 @@ CREATE TABLE `SkillSearchDb`.`user` (
   
    CREATE TABLE `SkillSearchDb`.`user_profile` (
   `iduser_profile` INT NOT NULL,
+  `user_id` INT NOT NULL,
   `user_sid` VARCHAR(50) NOT NULL,
   `first_name` VARCHAR(50) NOT NULL,
   `last_name` VARCHAR(50) NULL,
@@ -65,8 +66,8 @@ CREATE TABLE `SkillSearchDb`.`user` (
   PRIMARY KEY (`iduser_profile`));
 
   
-  CREATE TABLE `SkillSearchDb`.`employee_project_skill` (
-  `idemployee_project_skill` INT NOT NULL,
+  CREATE TABLE `SkillSearchDb`.`user_project_skill` (
+  `iduser_project_skill` INT NOT NULL,
   `sid` VARCHAR(50) NOT NULL,
   `projectid` INT NOT NULL,
   `skillid` INT NOT NULL,
@@ -76,9 +77,8 @@ CREATE TABLE `SkillSearchDb`.`user` (
   `created_by` VARCHAR(50) NULL,
   `updated_date` DATETIME NULL,
   `updated_by` VARCHAR(50) NULL,
-  PRIMARY KEY (`idemployee_project_skill`));
+  PRIMARY KEY (`iduser_project_skill`));
 
-  
  
 
   
@@ -98,21 +98,53 @@ CREATE TABLE `SkillSearchDb`.`user` (
   `updated_by` VARCHAR(50) NULL,
   PRIMARY KEY (`id_help`));
 
-  
- /* ALTER TABLE `SkillSearchDb`.`user_profile` 
+ALTER TABLE `SkillSearchDb`.`user` 
+CHANGE COLUMN `user_id` `user_id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `SkillSearchDb`.`user_profile` 
+CHANGE COLUMN `iduser_profile` `iduser_profile` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `SkillSearchDb`.`skill` 
+CHANGE COLUMN `skill_id` `skill_id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `SkillSearchDb`.`project` 
+CHANGE COLUMN `project_id` `project_id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `SkillSearchDb`.`location` 
+CHANGE COLUMN `location_id` `location_id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `SkillSearchDb`.`help` 
+CHANGE COLUMN `id_help` `id_help` INT(11) NOT NULL AUTO_INCREMENT ;
+
+
+ALTER TABLE `SkillSearchDb`.`user_project_skill` 
+CHANGE COLUMN `iduser_project_skill` `iduser_project_skill` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `SkillSearchDb`.`user` 
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`user_id`, `user_sid`),
+ADD UNIQUE INDEX `user_sid_UNIQUE` (`user_sid` ASC),
+ADD UNIQUE INDEX `email_UNIQUE` (`email` ASC);
+
+ALTER TABLE `SkillSearchDb`.`user_profile` 
+ADD INDEX `fk_profile_to_user_idx` (`user_id` ASC);
+ALTER TABLE `SkillSearchDb`.`user_profile` 
 ADD CONSTRAINT `fk_profile_to_user`
-  FOREIGN KEY (`iduser_profile`)
+  FOREIGN KEY (`user_id`)
   REFERENCES `SkillSearchDb`.`user` (`user_id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
   
-  
-  ALTER TABLE `SkillSearchDb`.`project` 
-ADD INDEX `fk_project_location_idx` (`location_id` ASC);
-ALTER TABLE `SkillSearchDb`.`project` 
-ADD CONSTRAINT `fk_project_location`
-  FOREIGN KEY (`location_id`)
-  REFERENCES `SkillSearchDb`.`location` (`location_id`)
+  ALTER TABLE `SkillSearchDb`.`user_profile` 
+DROP FOREIGN KEY `fk_profile_to_user`;
+ALTER TABLE `SkillSearchDb`.`user_profile` 
+DROP INDEX `fk_profile_to_user_idx` ,
+ADD INDEX `fk_profile_to_user_idx` (`user_sid` ASC);
+ALTER TABLE `SkillSearchDb`.`user_profile` 
+ADD CONSTRAINT `fk_profile_to_user`
+  FOREIGN KEY (`user_sid`)
+  REFERENCES `SkillSearchDb`.`user` (`user_sid`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
@@ -127,23 +159,57 @@ ADD CONSTRAINT `fk_profile_to_location`
   ON UPDATE NO ACTION;
 
   
-  ALTER TABLE `SkillSearchDb`.`employee_project_skill` 
-ADD INDEX `fk_project_id_idx` (`projectid` ASC),
-ADD INDEX `fk_skill_id_idx` (`skillid` ASC);
-ALTER TABLE `SkillSearchDb`.`employee_project_skill` 
-ADD CONSTRAINT `fk_user_id`
-  FOREIGN KEY (`idemployee_project_skill`)
-  REFERENCES `SkillSearchDb`.`user` (`user_id`)
+  ALTER TABLE `SkillSearchDb`.`project` 
+ADD INDEX `fk_project_to_location_idx` (`location_id` ASC);
+ALTER TABLE `SkillSearchDb`.`project` 
+ADD CONSTRAINT `fk_project_to_location`
+  FOREIGN KEY (`location_id`)
+  REFERENCES `SkillSearchDb`.`location` (`location_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+  
+  ALTER TABLE `SkillSearchDb`.`user_project_skill` 
+ADD INDEX `fk_eps_to_user_idx` (`sid` ASC),
+ADD INDEX `fk_eps_to_project_idx` (`projectid` ASC),
+ADD INDEX `fk_eps_to_skill_idx` (`skillid` ASC);
+ALTER TABLE `SkillSearchDb`.`user_project_skill` 
+ADD CONSTRAINT `fk_eps_to_user`
+  FOREIGN KEY (`sid`)
+  REFERENCES `SkillSearchDb`.`user` (`user_sid`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_project_id`
+ADD CONSTRAINT `fk_eps_to_project`
   FOREIGN KEY (`projectid`)
   REFERENCES `SkillSearchDb`.`project` (`project_id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_skill_id`
+ADD CONSTRAINT `fk_eps_to_skill`
   FOREIGN KEY (`skillid`)
   REFERENCES `SkillSearchDb`.`skill` (`skill_id`)
   ON DELETE NO ACTION
-  ON UPDATE NO ACTION;*/
+  ON UPDATE NO ACTION;
+
+  
+  ALTER TABLE `SkillSearchDb`.`help` 
+ADD INDEX `fk_requester_idx` (`requester` ASC),
+ADD INDEX `fk_provider_idx` (`provider` ASC);
+ALTER TABLE `SkillSearchDb`.`help` 
+ADD CONSTRAINT `fk_requester`
+  FOREIGN KEY (`requester`)
+  REFERENCES `SkillSearchDb`.`user` (`user_sid`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_provider`
+  FOREIGN KEY (`provider`)
+  REFERENCES `SkillSearchDb`.`user` (`user_sid`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+  
+
+
+  
+  
+  
 

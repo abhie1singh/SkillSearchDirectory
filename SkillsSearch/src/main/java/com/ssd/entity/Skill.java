@@ -3,6 +3,7 @@ package com.ssd.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -13,33 +14,22 @@ import java.util.Date;
 @NamedQuery(name="Skill.findAll", query="SELECT s FROM Skill s")
 public class Skill implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="skill_id")
 	private int skillId;
-
-	@Column(name="created_by")
 	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
 	private Date createdDate;
-
-	@Column(name="skill_name")
 	private String skillName;
-
-	@Column(name="updated_by")
 	private String updatedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_date")
 	private Date updatedDate;
-
 	private String version;
+	private List<UserProjectSkill> userProjectSkills;
 
 	public Skill() {
 	}
 
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="skill_id")
 	public int getSkillId() {
 		return this.skillId;
 	}
@@ -48,6 +38,8 @@ public class Skill implements Serializable {
 		this.skillId = skillId;
 	}
 
+
+	@Column(name="created_by")
 	public String getCreatedBy() {
 		return this.createdBy;
 	}
@@ -56,6 +48,9 @@ public class Skill implements Serializable {
 		this.createdBy = createdBy;
 	}
 
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	public Date getCreatedDate() {
 		return this.createdDate;
 	}
@@ -64,6 +59,8 @@ public class Skill implements Serializable {
 		this.createdDate = createdDate;
 	}
 
+
+	@Column(name="skill_name")
 	public String getSkillName() {
 		return this.skillName;
 	}
@@ -72,6 +69,8 @@ public class Skill implements Serializable {
 		this.skillName = skillName;
 	}
 
+
+	@Column(name="updated_by")
 	public String getUpdatedBy() {
 		return this.updatedBy;
 	}
@@ -80,6 +79,9 @@ public class Skill implements Serializable {
 		this.updatedBy = updatedBy;
 	}
 
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="updated_date")
 	public Date getUpdatedDate() {
 		return this.updatedDate;
 	}
@@ -88,12 +90,38 @@ public class Skill implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
+
 	public String getVersion() {
 		return this.version;
 	}
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+
+	//bi-directional many-to-one association to UserProjectSkill
+	@OneToMany(mappedBy="skill")
+	public List<UserProjectSkill> getUserProjectSkills() {
+		return this.userProjectSkills;
+	}
+
+	public void setUserProjectSkills(List<UserProjectSkill> userProjectSkills) {
+		this.userProjectSkills = userProjectSkills;
+	}
+
+	public UserProjectSkill addUserProjectSkill(UserProjectSkill userProjectSkill) {
+		getUserProjectSkills().add(userProjectSkill);
+		userProjectSkill.setSkill(this);
+
+		return userProjectSkill;
+	}
+
+	public UserProjectSkill removeUserProjectSkill(UserProjectSkill userProjectSkill) {
+		getUserProjectSkills().remove(userProjectSkill);
+		userProjectSkill.setSkill(null);
+
+		return userProjectSkill;
 	}
 
 }
