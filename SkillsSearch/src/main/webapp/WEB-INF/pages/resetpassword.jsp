@@ -16,9 +16,9 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="pwd">Password:</label>
+			<label class="control-label col-sm-2" for="confirm">Password:</label>
 			<div class="col-sm-3">
-				<input type="password" class="form-control" id="pwd"
+				<input type="password" class="form-control" id="confirm"
 					placeholder="Confirm password">
 			</div>
 		</div>
