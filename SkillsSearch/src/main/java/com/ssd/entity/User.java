@@ -42,6 +42,9 @@ public class User implements Serializable {
 	
 	@Transient
 	private UserProfile userProfile;
+	
+	@Transient
+	private Location location;
 
 	public User() {
 	}
@@ -116,6 +119,14 @@ public class User implements Serializable {
 
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 }

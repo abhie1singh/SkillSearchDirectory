@@ -14,5 +14,7 @@ import com.ssd.entity.UserProfile;
 public interface UserProfileRepository extends JpaRepository<UserProfile, String>{
 
 	UserProfile findByUserSid(String userSid);
+	UserProfile findByFirstName(String firstName);
+	UserProfile findByLastName(String lastName);
 
 }

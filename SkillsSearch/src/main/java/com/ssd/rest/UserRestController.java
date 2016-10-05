@@ -29,13 +29,13 @@ public class UserRestController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/CheckLogin", method = RequestMethod.POST)
-	public ResponseEntity<Boolean> login(@RequestBody User user) {
+	public ResponseEntity<User> login(@RequestBody User user) {
 		
-		Boolean isValidUser = userService.checkLogin(user.getEmail(), user.getPassword());
-		if(isValidUser == null){
-			return new ResponseEntity<Boolean>(HttpStatus.NO_CONTENT);
+		User loggedInUser = userService.checkLogin(user.getEmail(), user.getPassword());
+		if(loggedInUser == null){
+			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<Boolean>(isValidUser, HttpStatus.OK);
+		return new ResponseEntity<User>(loggedInUser, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "Sid/{sid}", method = RequestMethod.POST)

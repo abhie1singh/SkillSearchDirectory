@@ -12,5 +12,6 @@ public interface UserService{
 	
 	User findByEmail(String email);
 	
-	Boolean checkLogin(String email, String password);
+	User checkLogin(String email, String password);
+	
 }

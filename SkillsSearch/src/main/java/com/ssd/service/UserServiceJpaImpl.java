@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssd.dao.LocationRepository;
 import com.ssd.dao.UserProfileRepository;
 import com.ssd.dao.UserRepository;
+import com.ssd.entity.Location;
 import com.ssd.entity.User;
 import com.ssd.entity.UserProfile;
 
@@ -21,35 +23,44 @@ public class UserServiceJpaImpl implements UserService {
     
 	@Autowired
 	private UserProfileRepository userProfileRepository;
+	
+	@Autowired
+	private LocationRepository locationRepository;
 
 	@Override
 	public List<User> findAllUsers() {
-		// TODO Auto-generated method stub
 		return userRepository.findAll();
 	}
 
 	@Override
 	public User findByUserSid(String userSid) {
-		// TODO Auto-generated method stub
 		User user = userRepository.findByUserSid(userSid);
-		UserProfile userProfile = userProfileRepository.findByUserSid(userSid);
-		user.setUserProfile(userProfile);
+		if(null != user){
+			UserProfile userProfile = userProfileRepository.findByUserSid(userSid);
+			user.setUserProfile(userProfile);
+			Location location = locationRepository.findLocationByLocationId(userProfile.getLocationId());
+			user.setLocation(location);
+		}
 		return user;
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return userRepository.findByEmail(email);
+		User user = userRepository.findByEmail(email);
+		UserProfile userProfile = userProfileRepository.findByUserSid(user.getUserSid());
+		user.setUserProfile(userProfile);
+		return user;
 	}
 
 	@Override
-	public Boolean checkLogin(String email, String password) {
+	public User checkLogin(String email, String password) {
 		User user = userRepository.findByEmailAndPassword(email, password);
-		if(user == null){
-			return false;
-		}else{
-			return true;
+		if(null != user){
+			UserProfile userProfile = userProfileRepository.findByUserSid(user.getUserSid());
+			user.setUserProfile(userProfile);
 		}
+		return user;
 	}
+	
+	
 }
