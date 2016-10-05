@@ -7,19 +7,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssd.dao.UserProfileRepository;
 import com.ssd.dao.UserRepository;
 import com.ssd.entity.User;
+import com.ssd.entity.UserProfile;
 
 @Service
 @Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 public class UserServiceJpaImpl implements UserService {
 
-    private final UserRepository userRepository;
+	@Autowired
+    private UserRepository userRepository;
     
-    @Autowired
-    public UserServiceJpaImpl(final UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+	@Autowired
+	private UserProfileRepository userProfileRepository;
 
 	@Override
 	public List<User> findAllUsers() {
@@ -30,12 +31,25 @@ public class UserServiceJpaImpl implements UserService {
 	@Override
 	public User findByUserSid(String userSid) {
 		// TODO Auto-generated method stub
-		return userRepository.findByUserSid(userSid);
+		User user = userRepository.findByUserSid(userSid);
+		UserProfile userProfile = userProfileRepository.findByUserSid(userSid);
+		user.setUserProfile(userProfile);
+		return user;
 	}
 
 	@Override
 	public User findByEmail(String email) {
 		// TODO Auto-generated method stub
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public Boolean checkLogin(String email, String password) {
+		User user = userRepository.findByEmailAndPassword(email, password);
+		if(user == null){
+			return false;
+		}else{
+			return true;
+		}
 	}
 }

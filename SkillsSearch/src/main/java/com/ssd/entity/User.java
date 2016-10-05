@@ -39,6 +39,9 @@ public class User implements Serializable {
 
 	@Column(name="user_sid")
 	private String userSid;
+	
+	@Transient
+	private UserProfile userProfile;
 
 	public User() {
 	}
@@ -105,6 +108,14 @@ public class User implements Serializable {
 
 	public void setUserSid(String userSid) {
 		this.userSid = userSid;
+	}
+
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
 	}
 
 }
